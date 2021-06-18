@@ -33,6 +33,7 @@ $ make build
 To build a release make a tag and use gorelease
 
 ```sh
+$ export GPG_FINGERPRINT=<Your GPG fingerprint>
 $ git tag -f v0.2.1
 $ goreleaser release --rm-dist
 ```
