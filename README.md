@@ -30,6 +30,13 @@ $ cd $GOPATH/src/github.com/terraform-providers/terraform-provider-chef
 $ make build
 ```
 
+To build a release make a tag and use gorelease
+
+```sh
+$ git tag -f v0.2.1
+$ goreleaser release --rm-dist
+```
+
 Using the provider
 ----------------------
 ## Fill in for each provider
