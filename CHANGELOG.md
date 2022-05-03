@@ -1,4 +1,4 @@
-## 0.3.0 (Unreleased)
+## 0.3.0 (May 3, 2022)
 
 * Add resource importing
 
