@@ -1,5 +1,7 @@
 ## 0.3.0 (Unreleased)
 
+* Add resource importing
+
 ## 0.2.1 (June 18, 2021)
 
 * Add goreleaser

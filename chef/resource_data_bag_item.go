@@ -28,6 +28,9 @@ func resourceChefDataBagItem() *schema.Resource {
 				StateFunc: jsonStateFunc,
 			},
 		},
+		Importer: &schema.ResourceImporter{
+			State: schema.ImportStatePassthrough,
+		},
 	}
 }
 
