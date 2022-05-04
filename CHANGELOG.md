@@ -1,6 +1,6 @@
 ## 0.3.1 (May 4, 2022)
 
-* Add publishing script
+* Add publishing script - SP
 
 ## 0.3.0 (May 3, 2022)
 
