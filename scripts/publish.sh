@@ -35,5 +35,5 @@ gsutil "dist/terraform-provider-chef_linux_amd64_v1/terraform-provider-chef_v$VE
 
 # Update versions file
 gsutil cp $GCS_BUCKET/versions - | \
-  jq -r --arg VERSION "$VERSION" '.versions += [{"version": $VERSION, "platforms": [{"os": "darwin", "arch": "amd64"},{"os": "linux", "arch": "amd64"}]}]' |
+  jq -r --arg VERSION "$VERSION" '.versions += [{"version": $VERSION, "platforms": [{"os": "darwin", "arch": "amd64"},{"os": "linux", "arch": "amd64"}]}]' | \
   gsutil cp - $GCS_BUCKET/versions
