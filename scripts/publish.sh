@@ -30,8 +30,8 @@ if [ ! -d "dist" ]; then
   exit
 fi
 
-gsutil "dist/terraform-provider-chef_darwin_amd64_v1/terraform-provider-chef_v$VERSION" "$GCS_BUCKET/$VERSION/download/darwin/amd64"
-gsutil "dist/terraform-provider-chef_linux_amd64_v1/terraform-provider-chef_v$VERSION" "$GCS_BUCKET/$VERSION/download/linux/amd64"
+gsutil cp "dist/terraform-provider-chef_darwin_amd64_v1/terraform-provider-chef_v$VERSION" "$GCS_BUCKET/$VERSION/download/darwin/amd64"
+gsutil cp "dist/terraform-provider-chef_linux_amd64_v1/terraform-provider-chef_v$VERSION" "$GCS_BUCKET/$VERSION/download/linux/amd64"
 
 # Update versions file
 gsutil cp $GCS_BUCKET/versions - | \
