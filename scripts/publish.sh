@@ -61,7 +61,7 @@ EOT
 gsutil cp "dist/terraform-provider-chef_${VERSION}_${os}_amd64.json" "$GCS_BUCKET/$VERSION/download/${os}/amd64"
 done
 
-# # Update versions file
+# Update versions file
 gsutil cp $GCS_BUCKET/versions - | \
   jq -r --arg VERSION "$VERSION" '.versions += [{"version": $VERSION, "platforms": [{"os": "darwin", "arch": "amd64"},{"os": "linux", "arch": "amd64"}]}]' | \
   gsutil cp - $GCS_BUCKET/versions
