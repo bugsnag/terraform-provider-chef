@@ -1,10 +1,14 @@
+## 0.3.1 (May 4, 2022)
+
+* Add publishing script
+
 ## 0.3.0 (May 3, 2022)
 
-* Add resource importing
+* Add resource importing - SP
 
 ## 0.2.1 (June 18, 2021)
 
-* Add goreleaser
+* Add goreleaser - WES
 
 ## 0.2.0 (June 24, 2019)
 

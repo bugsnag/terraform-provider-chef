@@ -30,10 +30,38 @@ if [ ! -d "dist" ]; then
   exit
 fi
 
-gsutil cp "dist/terraform-provider-chef_darwin_amd64_v1/terraform-provider-chef_v$VERSION" "$GCS_BUCKET/$VERSION/download/darwin/amd64"
-gsutil cp "dist/terraform-provider-chef_linux_amd64_v1/terraform-provider-chef_v$VERSION" "$GCS_BUCKET/$VERSION/download/linux/amd64"
+# Get the full key id from fingerprint
+gpg_key_id=$(gpg --list-keys --with-colons --with-fingerprint "$GPG_FINGERPRINT" | awk -F: '/^fpr:/ { print $10 }' | head -n 1)
+# Get public key from fingerprint
+gpg_public_key=$(gpg --export -a "$GPG_FINGERPRINT" | sed -e ':a' -e 'N' -e '$!ba' -e 's/\n/\\n/g')
+for os in darwin linux; do
+  checksum=$(sha256sum "dist/terraform-provider-chef_${VERSION}_${os}_amd64.zip" | awk '{ print $1 }' )
+  cat <<EOT > "dist/terraform-provider-chef_${VERSION}_${os}_amd64.json"
+{
+  "os": "${os}",
+  "arch": "amd64",
+  "filename": "terraform-provider-chef_${VERSION}_${os}_amd64.zip",
+  "download_url": "https://github.com/bugsnag/terraform-provider-chef/releases/download/${VERSION}/terraform-provider-chef_${VERSION}_${os}_amd64.zip",
+  "shasums_url": "https://github.com/bugsnag/terraform-provider-chef/releases/download/${VERSION}/terraform-provider-chef_${VERSION}_SHA256SUMS",
+  "shasums_signature_url": "https://github.com/bugsnag/terraform-provider-chef/releases/download/${VERSION}/terraform-provider-chef_${VERSION}_SHA256SUMS.sig",
+  "shasum": "${checksum}",
+  "signing_keys": {
+    "gpg_public_keys": [
+      {
+        "key_id": "$gpg_key_id",
+        "ascii_armor": "$gpg_public_key",
+        "trust_signature": "",
+        "source": "Bugsnag",
+        "source_url": "https://www.bugsnag.com"
+      }
+    ]
+  }
+}
+EOT
+gsutil cp "dist/terraform-provider-chef_${VERSION}_${os}_amd64.json" "$GCS_BUCKET/$VERSION/download/${os}/amd64"
+done
 
-# Update versions file
+# # Update versions file
 gsutil cp $GCS_BUCKET/versions - | \
   jq -r --arg VERSION "$VERSION" '.versions += [{"version": $VERSION, "platforms": [{"os": "darwin", "arch": "amd64"},{"os": "linux", "arch": "amd64"}]}]' | \
   gsutil cp - $GCS_BUCKET/versions
