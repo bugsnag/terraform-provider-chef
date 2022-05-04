@@ -60,5 +60,20 @@ ifeq (,$(wildcard $(GOPATH)/src/$(WEBSITE_REPO)))
 endif
 	@$(MAKE) -C $(GOPATH)/src/$(WEBSITE_REPO) website-provider-test PROVIDER_PATH=$(shell pwd) PROVIDER_NAME=$(PKG_NAME)
 
+publish: ## publish release to GCS
+	@if [[ -z "$(VERSION)" ]]; then \
+		echo "Please give a version to publish. make <target> VERSION=1.0.0"; \
+		exit 1; \
+	fi
+	@if [[ -z "$(GPG_FINGERPRINT)" ]]; then \
+		echo "Please give a GPG fingerprint for signing. make <target> GPG_FINGERPRINT=xxx"; \
+		exit 1; \
+	fi
+	@if [[ -z "$(GITHUB_TOKEN)" ]]; then \
+		echo "Please give a Github token to publish. make <target> GITHUB_TOKEN=xxx"; \
+		exit 1; \
+	fi
+	@VERSION=$(VERSION) GPG_FINGERPRINT=$(GPG_FINGERPRINT) GITHUB_TOKEN=$(GITHUB_TOKEN) ./scripts/publish.sh
+
 .PHONY: build test testacc vet fmt fmtcheck errcheck test-compile website website-test
 
