@@ -1,3 +1,7 @@
+## 0.3.2 (June 15, 2022)
+
+* Add arm64 on .goreleaser.yml and publish.sh
+
 ## 0.3.1 (May 4, 2022)
 
 * Add publishing script - SP
