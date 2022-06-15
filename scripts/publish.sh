@@ -36,9 +36,8 @@ gpg_key_id=$(gpg --list-keys --with-colons --with-fingerprint "$GPG_FINGERPRINT"
 gpg_public_key=$(gpg --export -a "$GPG_FINGERPRINT" | sed -e ':a' -e 'N' -e '$!ba' -e 's/\n/\\n/g')
 
 for platform in "darwin|amd64" "darwin|arm64" "linux|amd64"; do
-  IFS='|' read -ra arr <<< $platform
-  os=${arr[0]}
-  arch=${arr[1]}
+  os=$( sed 's/|.*//' <<< ${platform} )
+  arch=$( sed 's/.*|//' <<< ${platform} )
   checksum=$(sha256sum "dist/terraform-provider-chef_${VERSION}_${os}_${arch}.zip" | awk '{ print $1 }' )
   cat <<EOT > "dist/terraform-provider-chef_${VERSION}_${os}_${arch}.json"
 {
