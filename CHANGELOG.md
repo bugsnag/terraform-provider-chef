@@ -1,3 +1,7 @@
+## 0.3.3 (April 8, 2026)
+
+* Upgrade go version and terraform dependency
+
 ## 0.3.2 (June 15, 2022)
 
 * Add arm64 on .goreleaser.yml and publish.sh
