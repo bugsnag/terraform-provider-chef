@@ -22,7 +22,7 @@ git tag "$VERSION"
 git push origin "$VERSION"
 
 # Run goreleaser to generate binaries and publish release
-goreleaser release --rm-dist
+goreleaser release --clean
 
 # Upload to GCS
 if [ ! -d "dist" ]; then
