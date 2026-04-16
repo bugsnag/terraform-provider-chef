@@ -1,71 +1,43 @@
-Terraform Provider
-==================
+# To update Terrform-provider-chef
 
-- Website: https://www.terraform.io
-- [![Gitter chat](https://badges.gitter.im/hashicorp-terraform/Lobby.png)](https://gitter.im/hashicorp-terraform/Lobby)
-- Mailing list: [Google Groups](http://groups.google.com/group/terraform-tool)
+## Requirement
 
-<img src="https://cdn.rawgit.com/hashicorp/terraform-website/master/content/source/assets/images/logo-hashicorp.svg" width="600px">
+Install gpg, go, sha256sum, goreleaser if you don't have them yet:
 
-Requirements
-------------
-
--	[Terraform](https://www.terraform.io/downloads.html) 0.10.x
--	[Go](https://golang.org/doc/install) 1.11 (to build the provider plugin)
-
-Building The Provider
----------------------
-
-Clone repository to: `$GOPATH/src/github.com/terraform-providers/terraform-provider-chef`
-
-```sh
-$ mkdir -p $GOPATH/src/github.com/terraform-providers; cd $GOPATH/src/github.com/terraform-providers
-$ git clone git@github.com:terraform-providers/terraform-provider-chef
+```shell
+brew install gpg
+brew install go
+brew install goreleaser
+brew install coreutils # contains sha256sum
 ```
 
-Enter the provider directory and build the provider
+## To publish
+
+you'll need the new version number, a GPG_FINGERPRINT:
+
+```shell
+gpg --list-keys
+```
+you'll also need a github token with the 'repo' scope
+
+Add this to your `.bashrc`, `zshrc`, `.profile` etc and `source` the file if you don't have it yet:
 
 ```sh
-$ cd $GOPATH/src/github.com/terraform-providers/terraform-provider-chef
-$ make build
+export GPG_TTY=$(tty)
 ```
 
-To build a release make a tag and use gorelease
+Run publish.sh
 
-```sh
-$ export GPG_FINGERPRINT=<Your GPG fingerprint>
-$ git tag -f v0.2.1
-$ goreleaser release --rm-dist
+```shell
+$ make publish VERSION=yourVersion GPG_FINGERPRINT=yourGPGfingerprint GITHUB_TOKEN=yourGithubToken
 ```
 
-Using the provider
-----------------------
-## Fill in for each provider
+## Rollback publish for rerun
 
-Developing the Provider
----------------------------
-
-If you wish to work on the provider, you'll first need [Go](http://www.golang.org) installed on your machine (version 1.11+ is *required*). You'll also need to correctly setup a [GOPATH](http://golang.org/doc/code.html#GOPATH), as well as adding `$GOPATH/bin` to your `$PATH`.
-
-To compile the provider, run `make build`. This will build the provider and put the provider binary in the `$GOPATH/bin` directory.
+remove any bad files from GCS if generated
+remove the remote tag in github
+remove the local tag by running
 
 ```sh
-$ make bin
-...
-$ $GOPATH/bin/terraform-provider-chef
-...
-```
-
-In order to test the provider, you can simply run `make test`.
-
-```sh
-$ make test
-```
-
-In order to run the full suite of Acceptance tests, run `make testacc`.
-
-*Note:* Acceptance tests create real resources, and often cost money to run.
-
-```sh
-$ make testacc
+git tag -d yourVersion
 ```
