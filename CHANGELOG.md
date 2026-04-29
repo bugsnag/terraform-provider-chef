@@ -1,3 +1,7 @@
+## 0.3.4 (April 27, 2026)
+
+* Upgraded goreleaser flags for v2
+
 ## 0.3.3 (March 31, 2026)
 
 * Upgraded Go to 1.26.1 && Updated Terraform dependency from version 0.12.2 to 0.12.17
