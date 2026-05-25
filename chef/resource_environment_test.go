@@ -7,8 +7,8 @@ import (
 
 	chefc "github.com/go-chef/chef"
 
-	"github.com/hashicorp/terraform/helper/resource"
-	"github.com/hashicorp/terraform/terraform"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 )
 
 func TestAccEnvironment_basic(t *testing.T) {
