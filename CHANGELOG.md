@@ -1,3 +1,11 @@
+## 0.3.7 (June 16, 2026)
+
+* Upgrade to Terraform Plugin SDK
+
+## 0.3.6 (May 7, 2026)
+
+* This release bundles v0.3.3, v0.3.4, and v0.3.5 (created due to earlier publish failures) into a single consolidated release. Includes Go upgrade to 1.26, GoReleaser v2 upgrade, and updated GoReleaser flags.
+
 ## 0.3.4 (April 27, 2026)
 
 * Upgraded goreleaser flags for v2
