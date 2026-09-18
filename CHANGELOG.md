@@ -1,3 +1,7 @@
+## 0.4.1 (Sep 18, 2026)
+
+* upgraded grpc v1.82.1 to v1.83.1 for resolving SCA Findings
+
 ## 0.3.7 (June 16, 2026)
 
 * Upgrade to Terraform Plugin SDK
