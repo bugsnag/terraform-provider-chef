@@ -8,10 +8,10 @@ then
   exit
 fi
 
-# Need gsutil for pushing to GCS
-if ! command -v gsutil &> /dev/null
+# Need gcloud storage for pushing to GCS
+if ! command -v gcloud &> /dev/null
 then
-  echo "gsutil is not installed. Please install via Google Cloud CLI"
+  echo "gcloud is not installed. Please install the Google Cloud CLI"
   exit
 fi
 
@@ -61,10 +61,10 @@ for platform in "darwin|amd64" "darwin|arm64" "linux|amd64"; do
   }
 }
 EOT
-gsutil cp "dist/terraform-provider-chef_${VERSION}_${os}_${arch}.json" "$GCS_BUCKET/$VERSION/download/${os}/${arch}"
+gcloud storage cp "dist/terraform-provider-chef_${VERSION}_${os}_${arch}.json" "$GCS_BUCKET/$VERSION/download/${os}/${arch}"
 done
 
 # Update versions file
-gsutil cp $GCS_BUCKET/versions - | \
+gcloud storage cp "$GCS_BUCKET/versions" - | \
   jq -r --arg VERSION "$VERSION" '.versions += [{"version": $VERSION, "platforms": [{"os": "darwin", "arch": "amd64"},{"os": "linux", "arch": "amd64"},{"os": "darwin", "arch": "arm64"}]}]' | \
-  gsutil cp - $GCS_BUCKET/versions
+  gcloud storage cp - "$GCS_BUCKET/versions"

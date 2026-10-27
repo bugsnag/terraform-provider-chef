@@ -1,3 +1,7 @@
+## 0.4.3 (Oct 27, 2026)
+
+* Replaced gsutil with gcloud storage in publish script
+
 ## 0.4.2 (Sep 23, 2026)
 
 * upgraded grpc v1.83.1 to v1.83.2 for resolving SCA Findings
